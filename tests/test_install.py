@@ -4,6 +4,7 @@ PATH 는 /usr/bin:/bin 만 준다 — gbrain·ollama·claude 가 안 보이게 �
 """
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -16,6 +17,7 @@ INSTALL = os.environ.get("INSTALL_SH", str(ROOT / "install.sh"))
 class Install(unittest.TestCase):
     def setUp(self):
         self.home = Path(tempfile.mkdtemp(prefix="kittest-home-"))
+        self.addCleanup(shutil.rmtree, self.home, ignore_errors=True)
         self.claude = self.home / ".claude"
         self.notes = self.home / "notes"
 
@@ -245,6 +247,7 @@ class GbrainWithTools(unittest.TestCase):
 
     def setUp(self):
         self.home = Path(tempfile.mkdtemp(prefix="kittest-gb-"))
+        self.addCleanup(shutil.rmtree, self.home, ignore_errors=True)
         self.bin = self.home / "stubbin"
         self.bin.mkdir()
         for name, body in (("ollama", STUB_OLLAMA), ("gbrain", STUB_GBRAIN), ("claude", STUB_CLAUDE)):

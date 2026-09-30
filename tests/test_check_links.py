@@ -1,5 +1,6 @@
 """modules/gbrain/check_links.py 검사."""
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -10,8 +11,17 @@ ROOT = Path(__file__).resolve().parent.parent
 CHECK = os.environ.get("CHECK_LINKS", str(ROOT / "modules" / "gbrain" / "check_links.py"))
 
 
+CREATED = []
+
+
+def tearDownModule():
+    for d in CREATED:
+        shutil.rmtree(d, ignore_errors=True)
+
+
 def notes(files):
     d = tempfile.mkdtemp(prefix="notes-")
+    CREATED.append(d)
     for rel, text in files.items():
         p = Path(d) / rel
         p.parent.mkdir(parents=True, exist_ok=True)

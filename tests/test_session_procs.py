@@ -18,6 +18,10 @@ PROCS = os.environ.get("SESSION_PROCS", str(ROOT / "modules" / "procs" / "sessio
 TMP_HOME = tempfile.mkdtemp(prefix="procstest-home-")
 
 
+def tearDownModule():
+    shutil.rmtree(TMP_HOME, ignore_errors=True)
+
+
 NODE = shutil.which("node")
 MARKER = f"procstest-{os.getpid()}-{time.time_ns()}"   # session_procs 가 이 마커가 든 프로세스만 보게 한다
 

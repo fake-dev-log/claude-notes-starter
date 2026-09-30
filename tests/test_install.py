@@ -45,7 +45,8 @@ class Install(unittest.TestCase):
         self.assertEqual(code, 0, out)
         self.assertIn("add     ~/notes/README.md", out)       # 경로는 ~ 표기로 보인다(\~ 가 새면 안 된다)
         self.assertNotIn("\\~", out)
-        for p in ("notes/README.md", "notes/queue.md", ".claude/commands/log.md", ".claude/commands/next.md"):
+        for p in ("notes/README.md", "notes/queue.md", ".claude/commands/log.md", ".claude/commands/next.md",
+                  ".claude/notes-kit/claim.py"):
             self.assertTrue((self.home / p).exists(), p)
         self.assertTrue((self.notes / "daily").is_dir())
         md = self.read(self.claude / "CLAUDE.md")

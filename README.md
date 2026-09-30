@@ -17,11 +17,13 @@ Claude Code 를 터미널에서 쓰는 사람을 위한 **기록 루프** 키트
 
 | 모듈 | 무엇 | 이럴 때 켠다 | 필요한 것 |
 |---|---|---|---|
-| `core` | `/log` · `/next` · 기록 규칙 4줄 | 처음부터 | Claude Code |
+| `core` | `/log` · `/next` · 기록 규칙 4줄 · 세션 간 착수 표시(`/next claim`) | 처음부터 | Claude Code |
 | `scrum` | `/scrum am\|pm\|weekly` — daily 로 아침 우선순위·저녁 정리·주간 보고 초안. `--post` 면 Slack 에 보고 | 스크럼·주간 보고를 매일 손으로 쓰고 있을 때 | (선택) Slack·Google Calendar·Jira MCP |
 | `entities` | 사람·프로젝트·결정·회의 페이지 + `RESOLVER.md`(어디에 쓸지 규칙) | "그 사람이 뭐라고 했더라", "그때 왜 그렇게 정했더라"가 daily 뒤지기로 안 풀릴 때 | — |
 | `procs` | 세션이 띄운 dev 서버·watcher 를 세션 종료 때 회수, 새 세션에 잔여 프로세스 보고 | 세션을 여러 개 돌리고, 끝난 세션의 서버가 남아 있던 적이 있을 때 | macOS, `/usr/bin/python3` |
 | `gbrain` | 노트 의미 검색(로컬 PGLite + Ollama 임베딩) + MCP 연결 + 커밋마다 자동 동기화 + `/brain sync\|check` | 노트가 수백 장이 되어 grep 으로 안 찾아질 때 | [gbrain](https://github.com/garrytan/gbrain)(bun), Ollama `bge-m3`, `~/notes` 가 git repo |
+
+**여러 세션을 동시에 쓸 때**: `/next` 는 다른 세션이 착수한 항목을 `🔒 <세션 이름>` 으로 빼고 다음 항목을 `▶ 지금` 으로 준다. 항목에 손대기 시작할 때 `/next claim` — 표시는 그 세션이 살아 있는 동안만 유효하고, 세션을 끝내면 저절로 풀린다(git 커밋 없음, hook 없음).
 
 Jira 대조(`/next sync`)는 모듈이 아니라 `core` 에 들어 있다 — Jira MCP 가 연결돼 있고 큐 절에 `> jql:` 줄이 있으면 동작하고, 없으면 daily 대조만 한다.
 

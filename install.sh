@@ -17,7 +17,7 @@ CLAUDE_MD=$CLAUDE_HOME/CLAUDE.md
 STAMP=$(date +%Y%m%d-%H%M%S)
 ALL=(core scrum entities procs gbrain)
 typeset -A DESC=(
-  core     "/log · /next — 기록 루프 (필수)"
+  core     "/log · /next(+ 세션 간 착수 표시) — 기록 루프 (필수)"
   scrum    "/scrum am|pm|weekly [--post] — daily 로 스크럼·주간 보고 초안, Slack 보고"
   entities "사람·프로젝트·결정 페이지 + RESOLVER — /log·/scrum 이 새 사실을 옮긴다"
   procs    "세션이 띄운 dev 서버·watcher 를 세션 종료 때 회수 (SessionStart/End hook)"
@@ -67,6 +67,7 @@ m_core() {
   put_user "$HERE/core/notes/queue.md"  "$NOTES/queue.md"
   put_kit "$HERE/core/commands/log.md"  "$CMD/log.md"
   put_kit "$HERE/core/commands/next.md" "$CMD/next.md"
+  put_kit "$HERE/core/claim.py"         "$KIT/claim.py"
   append_section "$CLAUDE_MD" "$HERE/core/CLAUDE.snippet.md"
   mkdir -p "$KIT"; print -r -- "$NOTES" > "$KIT/notes-path"
 }
